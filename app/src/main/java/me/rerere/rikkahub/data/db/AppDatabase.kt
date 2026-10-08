@@ -7,6 +7,7 @@ import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import me.rerere.ai.core.TokenUsage
 import me.rerere.rikkahub.data.db.dao.ConversationDAO
+import me.rerere.rikkahub.data.db.dao.DailyDAO
 import me.rerere.rikkahub.data.db.dao.FavoriteDAO
 import me.rerere.rikkahub.data.db.dao.FolderDAO
 import me.rerere.rikkahub.data.db.dao.GenMediaDAO
@@ -16,6 +17,9 @@ import me.rerere.rikkahub.data.db.dao.MemoryDAO
 import me.rerere.rikkahub.data.db.dao.MessageNodeDAO
 import me.rerere.rikkahub.data.db.dao.WorkspaceDAO
 import me.rerere.rikkahub.data.db.entity.ConversationEntity
+import me.rerere.rikkahub.data.db.entity.DailyEntryEntity
+import me.rerere.rikkahub.data.db.entity.DailyEventEntity
+import me.rerere.rikkahub.data.db.entity.DailyRoomSettingsEntity
 import me.rerere.rikkahub.data.db.entity.FavoriteEntity
 import me.rerere.rikkahub.data.db.entity.FolderEntity
 import me.rerere.rikkahub.data.db.entity.GenMediaEntity
@@ -25,9 +29,11 @@ import me.rerere.rikkahub.data.db.entity.MediaCreationRecordEntity
 import me.rerere.rikkahub.data.db.entity.MediaCreationSessionEntity
 import me.rerere.rikkahub.data.db.entity.MemoryEntity
 import me.rerere.rikkahub.data.db.entity.MessageNodeEntity
+import me.rerere.rikkahub.data.db.entity.JournalDraftEntity
 import me.rerere.rikkahub.data.db.entity.WorkspaceEntity
 import me.rerere.rikkahub.data.db.migrations.Migration_16_17
 import me.rerere.rikkahub.data.db.migrations.Migration_22_23
+import me.rerere.rikkahub.data.db.migrations.Migration_27_28
 import me.rerere.rikkahub.data.db.migrations.Migration_8_9
 import me.rerere.rikkahub.utils.JsonInstant
 
@@ -44,8 +50,12 @@ import me.rerere.rikkahub.utils.JsonInstant
         MediaCreationSessionEntity::class,
         MediaCreationNodeEntity::class,
         MediaCreationRecordEntity::class,
+        DailyEntryEntity::class,
+        DailyEventEntity::class,
+        JournalDraftEntity::class,
+        DailyRoomSettingsEntity::class,
     ],
-    version = 27,
+    version = 28,
     autoMigrations = [
         AutoMigration(from = 1, to = 2),
         AutoMigration(from = 2, to = 3),
@@ -68,6 +78,8 @@ import me.rerere.rikkahub.utils.JsonInstant
         AutoMigration(from = 24, to = 25),
         AutoMigration(from = 25, to = 26),
         AutoMigration(from = 26, to = 27),
+        // 27 -> 28 is a manual migration because the new tables also define
+        // foreign keys and indexes used by the Daily repository.
     ]
 )
 @TypeConverters(TokenUsageConverter::class)
@@ -89,6 +101,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun folderDao(): FolderDAO
 
     abstract fun mediaCreationDao(): MediaCreationDAO
+
+    abstract fun dailyDao(): DailyDAO
 }
 
 object TokenUsageConverter {
