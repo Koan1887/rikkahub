@@ -132,7 +132,7 @@ fun SettingAboutPage() {
                         )
 
                         Text(
-                            text = "RikkaHub",
+                            text = "小黄瓜 AI Hub",
                             style = MaterialTheme.typography.displaySmall,
                         )
                     }
@@ -168,9 +168,9 @@ fun SettingAboutPage() {
                         modifier = Modifier.padding(horizontal = 8.dp),
                     ) {
                         item(
-                            onClick = { context.openUrl("https://rikka-ai.com/") },
+                            onClick = { context.openUrl("https://github.com/Koan1887/rikkahub") },
                             leadingContent = { Icon(HugeIcons.Earth, null) },
-                            supportingContent = { Text("https://rikka-ai.com") },
+                            supportingContent = { Text("https://github.com/Koan1887/rikkahub") },
                             headlineContent = { Text(stringResource(R.string.about_page_website)) },
                         )
                         item(

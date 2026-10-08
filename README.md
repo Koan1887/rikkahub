@@ -1,3 +1,5 @@
+> **AI Hub fork**：本目录由 [RikkaHub](https://github.com/rikkahub/rikkahub) 派生，遵守根目录 AGPL-3.0。AI Hub 的改动和旧工程迁移状态见 [AI_HUB_FORK.md](AI_HUB_FORK.md)。以下是上游 README，保留作功能与构建参考。
+
 <div align="center">
   <img src="docs/icon.png" alt="App Icon" width="100" />
   <h1>RikkaHub</h1>
