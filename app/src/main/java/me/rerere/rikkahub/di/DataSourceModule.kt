@@ -110,6 +110,10 @@ val dataSourceModule = module {
     }
 
     single {
+        get<AppDatabase>().dailyDao()
+    }
+
+    single {
         MessageFtsManager(get())
     }
 

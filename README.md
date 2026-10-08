@@ -54,6 +54,7 @@ Click to join our Discord server 👉 [【RikkaHub】](https://discord.gg/9weBqx
 - 🤳 QR code export and import for providers
 - 🤖 Agent customization
 - 🧠 ChatGPT-like memory feature
+- 📔 Daily 日常记录：原文、待确认记录、时间线和日记草稿
 - 📝 AI Translation
 - 🌐 Custom HTTP request headers and request bodies
 - 💌 Silly Tavern character card import
@@ -79,8 +80,11 @@ Technology stack documentation:
 - [Okhttp](https://square.github.io/okhttp/) (HTTP client)
 - [kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization) (JSON serialization)
 
-> [!TIP]
-> You need a `google-services.json` file at `app` folder to build the app.
+### AI Hub Daily
+
+本 fork 在 RikkaHub 原生聊天页面中加入 Daily 入口。打开聊天室抽屉后可以进入 Daily 日常，手动保存原文、查看时间线、编辑或确认 AI 待确认字段，并从已确认记录整理可编辑的日记草稿。聊天室设置中的“旁听记录”默认关闭；打开后只保存该聊天室的用户消息草稿，不会让 Daily 在聊天室发言。
+
+Daily 数据使用 Room 28 版的 `daily_entries`、`daily_events`、`journal_drafts` 和 `daily_room_settings` 表，27→28 迁移不会修改已有聊天和长期记忆。原始用户文本单独保存，AI 字段可以重新编辑或删除。真实 Daily 模型调用和 Hermes 规划上下文接入仍在继续，当前旁听阶段不会伪造 AI 成功。
 
 ## 💰 Donate
 
