@@ -6,6 +6,8 @@ import me.rerere.rikkahub.data.files.FilesManager
 import me.rerere.rikkahub.data.files.SkillManager
 import me.rerere.rikkahub.data.repository.ConversationRepository
 import me.rerere.rikkahub.data.repository.DailyRepository
+import me.rerere.rikkahub.data.daily.DailyRecorder
+import me.rerere.rikkahub.data.daily.PlannerContextBuilder
 import me.rerere.rikkahub.data.repository.FavoriteRepository
 import me.rerere.rikkahub.data.repository.FolderRepository
 import me.rerere.rikkahub.data.repository.FilesRepository
@@ -35,6 +37,14 @@ val repositoryModule = module {
 
     single {
         DailyRepository(get())
+    }
+
+    single {
+        DailyRecorder(get())
+    }
+
+    single {
+        PlannerContextBuilder(get())
     }
 
     single {

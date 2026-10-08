@@ -6,6 +6,7 @@ import me.rerere.rikkahub.ui.pages.backup.BackupVM
 import me.rerere.rikkahub.ui.pages.chat.ChatDrawerVM
 import me.rerere.rikkahub.ui.pages.chat.ChatVM
 import me.rerere.rikkahub.ui.pages.debug.DebugVM
+import me.rerere.rikkahub.ui.pages.daily.DailyVM
 import me.rerere.rikkahub.ui.pages.favorite.FavoriteVM
 import me.rerere.rikkahub.ui.pages.search.SearchVM
 import me.rerere.rikkahub.ui.pages.history.HistoryVM
@@ -36,6 +37,7 @@ val viewModelModule = module {
             chatService = get(),
             filesManager = get(),
             favoriteRepository = get(),
+            dailyRecorder = get(),
         )
     }
     viewModelOf(::ChatDrawerVM)
@@ -89,4 +91,5 @@ val viewModelModule = module {
     viewModelOf(::FavoriteVM)
     viewModelOf(::SearchVM)
     viewModelOf(::StatsVM)
+    viewModelOf(::DailyVM)
 }

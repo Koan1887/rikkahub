@@ -27,6 +27,7 @@ import me.rerere.ai.ui.isEmptyInputMessage
 import me.rerere.rikkahub.R
 import me.rerere.rikkahub.data.datastore.Settings
 import me.rerere.rikkahub.data.datastore.SettingsStore
+import me.rerere.rikkahub.data.daily.DailyRecorder
 import me.rerere.rikkahub.data.files.FilesManager
 import me.rerere.rikkahub.data.model.Assistant
 import me.rerere.rikkahub.data.model.Avatar
@@ -54,6 +55,7 @@ class ChatVM(
     private val chatService: ChatService,
     private val filesManager: FilesManager,
     private val favoriteRepository: FavoriteRepository,
+    private val dailyRecorder: DailyRecorder,
 ) : ViewModel() {
     private val _conversationId: Uuid = Uuid.parse(id)
     val conversation: StateFlow<Conversation> = chatService.getConversationFlow(_conversationId)
@@ -201,6 +203,20 @@ class ChatVM(
         if (content.isEmptyInputMessage()) return
 
         chatService.sendMessage(_conversationId, content, answer)
+
+        // 旁听只由房间开关控制；Daily Recorder 不会向当前聊天室发送回复。
+        val rawText = content.filterIsInstance<UIMessagePart.Text>()
+            .joinToString("\n") { it.text }
+            .trim()
+        if (rawText.isNotBlank()) {
+            viewModelScope.launch {
+                if (dailyRecorder.isListeningEnabled(_conversationId.toString())) {
+                    // 当前阶段先保存为待确认原文草稿。接入 Daily 专用模型后，
+                    // 只替换 generate 回调，不改变原文保留和失败降级规则。
+                    dailyRecorder.record(rawText = rawText, generate = { _, _ -> null })
+                }
+            }
+        }
     }
 
     fun handleMessageEdit(parts: List<UIMessagePart>, messageId: Uuid) {

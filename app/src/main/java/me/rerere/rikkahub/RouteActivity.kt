@@ -91,6 +91,12 @@ import me.rerere.rikkahub.ui.pages.assistant.detail.AssistantRequestPage
 import me.rerere.rikkahub.ui.pages.backup.BackupPage
 import me.rerere.rikkahub.ui.pages.chat.ChatPage
 import me.rerere.rikkahub.ui.pages.debug.DebugPage
+import me.rerere.rikkahub.ui.pages.daily.DailyEntryDetailScreen
+import me.rerere.rikkahub.ui.pages.daily.DailyHomeScreen
+import me.rerere.rikkahub.ui.pages.daily.DailyTimelineScreen
+import me.rerere.rikkahub.ui.pages.daily.JournalDraftScreen
+import me.rerere.rikkahub.ui.pages.daily.MemoryReviewScreen
+import me.rerere.rikkahub.ui.pages.daily.RoomSettingsScreen
 import me.rerere.rikkahub.ui.pages.extensions.ExtensionsPage
 import me.rerere.rikkahub.ui.pages.extensions.PromptPage
 import me.rerere.rikkahub.ui.pages.extensions.QuickMessagesPage
@@ -368,6 +374,30 @@ class RouteActivity : ComponentActivity() {
                                 HistoryPage()
                             }
 
+                            entry<Screen.DailyHome> {
+                                DailyHomeScreen()
+                            }
+
+                            entry<Screen.DailyTimeline> {
+                                DailyTimelineScreen()
+                            }
+
+                            entry<Screen.DailyEntryDetail> { key ->
+                                DailyEntryDetailScreen(key.id)
+                            }
+
+                            entry<Screen.JournalDraft> { key ->
+                                JournalDraftScreen(key.date)
+                            }
+
+                            entry<Screen.RoomSettings> { key ->
+                                RoomSettingsScreen(key.conversationId)
+                            }
+
+                            entry<Screen.MemoryReview> {
+                                MemoryReviewScreen()
+                            }
+
                             entry<Screen.Favorite> {
                                 FavoritePage()
                             }
@@ -633,6 +663,24 @@ sealed interface Screen : NavKey {
 
     @Serializable
     data object History : Screen
+
+    @Serializable
+    data object DailyHome : Screen
+
+    @Serializable
+    data object DailyTimeline : Screen
+
+    @Serializable
+    data class DailyEntryDetail(val id: String) : Screen
+
+    @Serializable
+    data class JournalDraft(val date: String) : Screen
+
+    @Serializable
+    data class RoomSettings(val conversationId: String) : Screen
+
+    @Serializable
+    data object MemoryReview : Screen
 
     @Serializable
     data object Favorite : Screen

@@ -22,6 +22,9 @@ sealed interface DailyRecorderResult {
 
 /** Converts a model response into a reviewable draft and never discards the source text. */
 class DailyRecorder(private val repository: DailyRepository) {
+    suspend fun isListeningEnabled(conversationId: String): Boolean =
+        repository.getRoomSettings(conversationId)?.listeningEnabled == true
+
     suspend fun record(
         rawText: String,
         sourceMessageId: String? = null,

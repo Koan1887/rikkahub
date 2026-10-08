@@ -231,7 +231,10 @@ fun ChatDrawerContent(
                 }
             }
 
-            DrawerActions(navController = navController)
+            DrawerActions(
+                navController = navController,
+                conversationId = current.id.toString(),
+            )
 
             Row(
                 modifier = Modifier
@@ -696,7 +699,7 @@ fun ChatDrawerContent(
 }
 
 @Composable
-private fun DrawerActions(navController: Navigator) {
+private fun DrawerActions(navController: Navigator, conversationId: String) {
     Column {
         // 搜索入口
         DrawerEntry(
@@ -712,11 +715,23 @@ private fun DrawerActions(navController: Navigator) {
             onClick = { navController.navigate(Screen.History) },
         )
 
+        DrawerEntry(
+            icon = HugeIcons.Sparkles,
+            text = "Daily 日常",
+            onClick = { navController.navigate(Screen.DailyHome) },
+        )
+
         // 媒体创作入口
         DrawerEntry(
             icon = HugeIcons.ImageToVideo,
             text = stringResource(R.string.media_creation_title),
             onClick = { navController.navigate(Screen.MediaCreationSessions) },
+        )
+
+        DrawerEntry(
+            icon = HugeIcons.Settings03,
+            text = "聊天室设置",
+            onClick = { navController.navigate(Screen.RoomSettings(conversationId)) },
         )
     }
 }
